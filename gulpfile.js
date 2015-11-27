@@ -192,7 +192,7 @@ gulp.task('demo', function() {
   gulp.src(path.join(rootDirectory, 'example'))
     .pipe(plugins.webserver({
       livereload: true,
-      open: true
+      open: true,
   }));
 });
 

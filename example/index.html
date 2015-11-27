@@ -1,6 +1,4 @@
-<!--
-  This file is part of Invenio.
-  Copyright (C) 2015 CERN.
+<!-- Copyright (C) 2015 CERN.
 
   Invenio is free software; you can redistribute it
   and/or modify it under the terms of the GNU General Public License as
@@ -35,6 +33,7 @@
           <hr />
           <div ng-app="invenioSearchJs">
             <div ng-controller="invenioSearchController as searching">
+              Page we are: {{searching.invenioSearchArgs.params.page}}
                <!-- Searchbar -->
                 <div invenio-search-bar
                     invenio-search-query="searching.invenioSearchQuery"
@@ -42,13 +41,17 @@
                     invenio-search-do="searching.invenioDoSearch(query)"
                     search-doctype=""
                     search-method="GET"
-                    search-endpoint="http://jsonplaceholder.typicode.com/posts"
+                    search-endpoint="http://localhost:9200/_search"
                     search-extra-params='{"hello":"a"}'
                     search-index='demo'
                     search-page="1"
-                    search-size="20"
+                    search-size="2"
                     search-bar-template="/lib/templates/invenioSearchBar.html"
                     search-bar-input-placeholder="Type something"
+                ></div>
+                <div invenio-search-results-count
+                  invenio-search-items="searching.invenioResults"
+                  search-count-template="/lib/templates/invenioSearchResultsCount.html"
                 ></div>
                 <!-- Loading -->
                 <div invenio-search-results-loading
@@ -61,6 +64,13 @@
                   invenio-search-items="searching.invenioResults"
                   search-results-template="/lib/templates/invenioSearchResults.html"
                   search-results-record-template="/lib/templates/invenioSearchResultsRecord.html"
+                ></div>
+                <!-- Search pagination -->
+                <div invenio-search-results-pagination
+                  invenio-search-items="searching.invenioResults"
+                  invenio-search-args="searching.invenioSearchArgs"
+                  invenio-search-do="searching.invenioDoSearch(query)"
+                  search-pagination-template="/lib/templates/invenioSearchResultsPagination.html"
                 ></div>
             </div>
           </div>

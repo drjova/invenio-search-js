@@ -1,41 +1,21 @@
-# -*- coding: utf-8 -*-
-#
-# This file is part of Invenio.
-# Copyright (C) 2015 CERN.
-#
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
-
 notifications:
   email: false
-
 language: node_js
-
 node_js:
-  - '0.10'
-  - '0.12'
-
+- '0.10'
+- '0.12'
 before_script:
-  - 'npm install -g gulp'
-
+- npm install -g gulp
 before_install:
-  - 'npm i'
-
+- npm i
 install:
-  - 'npm test'
+- npm test
+deploy:
+  provider: npm
+  email: me@drjova.com
+  api_key:
+    secure: nI0DXNLnDidttVW0Gyou4wqVjLyHOjGDf1RJ8+5DV2ssm2WEihmlO20HZYakSuSlkh6ZnCKjiXZvBkTJT5u0Uv+1XSlRb28fjPugPL/Sh/YwQUbHxIyrxBIfT/EkDtGUuRCM8pvFZcMUfhGDoZDXGsJdjnXJt4WLRT+bpJnn0DUku7dJQrzX5EdwP1ROZBTxsmdAvf+MPN2i1aWOqOoii57DxL0WM5qZcG/sdgO9OON6IxV+334CXCIjUQ77RIZ5xRcBpohMH/8cT1tuYtsw494yx4pVuTeTQE9N0W8GbHgHmPwBbYvIiFsMm5VI6pjdvpU3yHDjxXvvtwfjrbuYZF8eAHbK6ofXzYlmICl69PmL9hLtQzJYwGjctVgjkHkYDJ4Sdy9AdYAs30GwoPAMGuGLuSfKG1t3YHwRZSCCP9L79H2mdi+92PC2KlojT7wEJXnwpKXZtewXovCiE5R8KY0aD9/GqUlUaaqVsWfU4LbGpsjUSU9h3DNc0UzkxM+QAi/BoGgXgIE29HUwEv7lBnN6IBIQbEDRL1K/TolqysPe+XOAqTzTnRTomdbJDcaLf83K2e58duUA+cnrIQnykMh9qOy2EWARbpC9LOJtTSAPF85n0hG+6RoyGFlJHCk0ksoWSq5pqSSmrGpFhDMzg7w3ln1LhyWpvReWUyviQBI=
+  on:
+    tags: true
+    repo: drjova/invenio-search-js
+    branch: structure
