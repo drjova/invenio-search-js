@@ -38,14 +38,20 @@ node_js:
   - '5.0.0'
   - '5.1.0'
 
+env:
+  global:
+    - GH_REF: 'github.com/drjova/invenio-search-js.git'
+    - secure: 'NqqaSrXxiHd4Ch8axcm9DVHYQkeU4PmQNxMI2QLWMPbee9xbFYVXg6sZfiOwm2gbGR3gBwOToUqE37S3XEspxBqzigI5QQFvCUBUyK8PiSuP7GVTnzF4zpMUtlO5wtdn6aJT4VkweFwL3o9atNZ8aBLlvWaBNf/ZMnfgt/e3Bk9t6q64KJwfPKCLdd4HJivGEddjRQZfINiZ4ryuHl9tNgRn4XgDLC6b+FYKj3iqPBG4wRdqKoxQJrzo+d7CYi4Dd1JEeGKrTzxxFaw0dIyAa/5ezsQ1J3VXozEfRpJ3oiRlbl655uAyYIoXmSJftJg2KeDRey6BoJIEgjBAvXHWLXsTsDG3Jr6lLT//+qekS77AnY/qTI8/vxbwKFCzBdOmQvSCV2S/AQqWeWf+nhVoyCFDnxf3ujIYT3xtoAJlcPn9pKT0QqmkXLulRyE8U2M2ex46SCP6vvGl4+ytR+Py6t5EVklnc+NtoYxz71wqBCKVDAMuaF9gA9k9h7spCfWXSUh4H/z1+8Dwzogg0wV0yRpnnlHcvRC16w9PjIajGHQnU1vpXzHd0shxdfDhaFRz2Y/dEiCu7FuyDPPr3y30J52jURHWeq+RLbZm78fT7isxRfMVaIs0C44MUnXw1aCUXFCpkKnUymGqtm+DqKQ/CrUHcU3Tocmni/N4sDdDVqg='
+
 before_script:
   - 'npm install -g gulp'
 
 before_install:
   - 'npm i'
 
-install:
+script:
   - 'npm test'
+  - 'bash ./deploy.sh'
 
 after_success:
   - 'npm run-script coverage'
