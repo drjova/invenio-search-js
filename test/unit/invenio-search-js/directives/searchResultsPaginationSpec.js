@@ -23,7 +23,7 @@
 
 'use strict';
 
-describe('Check search result pagination directive', function() {
+describe('Check search result count directive', function() {
 
   var $compile,
       $rootScope;
@@ -32,7 +32,7 @@ describe('Check search result pagination directive', function() {
   beforeEach(module('invenioSearchJs'));
 
   // load the templates
-  beforeEach(module('src/invenio-search-js/templates/invenioSearchResultsPagination.html'));
+  beforeEach(module('src/invenio-search-js/templates/invenioSearchResultsCount.html'));
 
   beforeEach(
     inject(function(_$compile_, _$rootScope_) {
@@ -45,51 +45,15 @@ describe('Check search result pagination directive', function() {
   it('creates invenio search bar directive',
     inject(function(){
 
-      // Add the extra scopes
-      $rootScope.invenioSearchItems = {
-        hits: {
-          hits: [
-            {
-              title: 'Ironman\'s suit'
-            },
-            {
-              title: 'Captain America\'s shield'
-            },
-            {
-              title: 'Thor\'s Mjölnir'
-            }
-          ],
-          total: 3
-        }
-      };
-
-      $rootScope.invenioSearchArgs = {
-        params: {
-          page: 1,
-        }
-      };
-
-      $rootScope.invenioSearchQuery = 'Save the world';
-
-      $rootScope.doSearch = function(query) {
-        return $rootScope.invenioSearchItems;
-      }
-
-      // Digest the scope
-      $rootScope.$digest();
-
-      var directiveCall = '<div invenio-search-results-pagination' +
-        'invenio-search-args="$rootScope.invenioSearchArgs"' +
-        'invenio-search-do="$root.doSearch(query)"' +
-        'invenio-search-items="$root.invenioSearchItems"' +
-        'invenio-search-query="$rootScope.invenioSearchQuery"' +
-        'search-pagination-template="src/invenio-search-js/templates/invenioSearchResultsPagination.html"' +
+      var directiveCall = '<div invenio-search-results-count' +
+        'invenio-search-items="searching.invenioResults"' +
+        'search-count-template="/lib/templates/invenioSearchResultsCount.html"' +
         '></div>';
 
       var element = $compile(directiveCall)($rootScope);
 
       // What we expect
-      var expectString = 'paginationHelper.getFirstClass()';
+      var expectString = 'count="invenioSearchItems.hits.total"';
 
       // Digest the scope
       $rootScope.$digest();
