@@ -23,44 +23,57 @@
 
 'use strict';
 
-describe('Check search result count directive', function() {
+describe('Check search results pagination directive', function() {
 
-  var $compile,
-      $rootScope;
+  var $compile;
+  var $rootScope;
+  var template;
 
   // Inject the angular module
   beforeEach(module('invenioSearchJs'));
 
   // load the templates
-  beforeEach(module('src/invenio-search-js/templates/invenioSearchResultsCount.html'));
+  beforeEach(module('templates'));
 
   beforeEach(
     inject(function(_$compile_, _$rootScope_) {
-      // The injector unwraps the underscores (_) from around the parameter names when matching
+
       $compile = _$compile_;
       $rootScope = _$rootScope_;
+
+      template = angular.element(
+        '<div>' +
+          '<div ng-controller="invenioSearchController as searching">' +
+              '<div invenio-search-results-pagination' +
+                'invenio-search-args="searching.invenioSearchArgs"' +
+                'invenio-search-do="searching.invenioDoSearch(query)"' +
+                'invenio-search-items="$root.invenioResults"' +
+                'invenio-search-query="searching.invenioSearchQuery"' +
+                'search-pagination-template="src/invenio-search-js/templates/invenioSearchResultsPagination.html"' +
+              '></div>' +
+          '</div>' +
+        '</div>'
+      );
+
     })
   );
 
-  it('creates invenio search bar directive',
+  it('Invenio pagination test',
     inject(function(){
-
-      var directiveCall = '<div invenio-search-results-count' +
-        'invenio-search-items="searching.invenioResults"' +
-        'search-count-template="/lib/templates/invenioSearchResultsCount.html"' +
-        '></div>';
-
-      var element = $compile(directiveCall)($rootScope);
-
-      // What we expect
-      var expectString = 'count="invenioSearchItems.hits.total"';
-
-      // Digest the scope
+      // Compile template
+      var element = $compile(
+        template
+      )($rootScope);
+      // Add some results
+      $rootScope.invenioResults = {
+        hits: {
+          total: 5
+        }
+      }
+      // Digest template
       $rootScope.$digest();
 
-      // Check
-      expect(element.html()).to.equal('');
+      expect(element.html()).to.contain('');
     })
   );
-
 });

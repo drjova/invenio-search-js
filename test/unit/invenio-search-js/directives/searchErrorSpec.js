@@ -23,7 +23,7 @@
 
 'use strict';
 
-describe('Check search loading directive', function() {
+describe('Check search error directive', function() {
 
   var $compile;
   var $rootScope;
@@ -44,10 +44,10 @@ describe('Check search loading directive', function() {
       template = angular.element(
         '<div>' +
           '<div ng-controller="invenioSearchController as searching">' +
-            '<div invenio-search-results-loading' +
-                'invenio-search-loading="searching.invenioSearchLoading"' +
-                'search-loading-template="src/invenio-search-js/templates/invenioSearchLoading.html"' +
-                'search-loading-message="Loading......"' +
+            '<div invenio-search-results-error' +
+                'invenio-search-error="searching.invenioError"' +
+                'invenio-search-message="Sorry something terrible happend"'+
+                'search-loading-template="src/invenio-search-js/templates/invenioSearchError.html"' +
             '></div>' +
           '</div>' +
         '</div>'
@@ -55,7 +55,7 @@ describe('Check search loading directive', function() {
     })
   );
 
-  it('Invenio loading test',
+  it('Invenio search error test',
     inject(function(){
       // Compile template
       var element = $compile(

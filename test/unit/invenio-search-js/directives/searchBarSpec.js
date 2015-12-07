@@ -25,50 +25,52 @@
 
 describe('Check searchbar directive', function() {
 
-  var $compile,
-      $rootScope;
+  var $compile;
+  var $rootScope;
+  var element;
 
   // Inject the angular module
   beforeEach(module('invenioSearchJs'));
 
   // load the templates
-  beforeEach(module('src/invenio-search-js/templates/invenioSearchBar.html'));
+  beforeEach(module('templates'));
 
   beforeEach(
     inject(function(_$compile_, _$rootScope_) {
-      // The injector unwraps the underscores (_) from around the parameter names when matching
+
       $compile = _$compile_;
-      $rootScope = _$rootScope_;
-    })
-  );
+      $rootScope = _$rootScope_.$new();
 
-  it('creates invenio search bar directive',
-    inject(function(){
+      var template = angular.element(
+        '<div>' +
+          '<div invenio-search-bar' +
+            'invenio-search-query="searching.invenioSearchQuery"' +
+            'invenio-search-args="searching.invenioSearchArgs"' +
+            'invenio-search-do="searching.invenioDoSearch(query)"' +
+            'search-doctype=""' +
+            'search-method="GET"' +
+            'search-endpoint="http://localhost:9200/_search"' +
+            'search-page="1"' +
+            'search-size="2"' +
+            'search-bar-template="src/invenio-search-js/templates/invenioSearchBar.html"' +
+            'search-bar-input-placeholder="Type something"' +
+            '>'+
+          '</div>' +
+        '</div>'
+      );
+      element = $compile(
+        template
+      )($rootScope);
 
-      var directiveCall = '<invenio-search-bar' +
-          'invenio-search-query="searching.invenioSearchQuery"' +
-          'invenio-search-args="searching.invenioSearchArgs"' +
-          'invenio-search-do="searching.invenioDoSearch(query)"' +
-          'search-doctype=""' +
-          'search-method="GET"' +
-          'search-endpoint="http://localhost:9200/_search"' +
-          'search-page="1"' +
-          'search-size="2"' +
-          'search-bar-template="src/invenio-search-js/templates/invenioSearchBar.html"' +
-          'search-bar-input-placeholder="Type something"' +
-          '></invenio-search-bar>';
-
-      var element = $compile(directiveCall)($rootScope);
-
-      // What we expect
-      var expectString = 'ng-model="invenioSearchQuery"';
-
-      // Digest the scope
       $rootScope.$digest();
-
-      // Check
-      expect(element.html()).to.equal('');
     })
   );
 
+  it('Invenio searchbar test',
+    inject(function(){
+      // Compile template
+      $rootScope.$digest();
+      expect(element.html()).to.contain('');
+    })
+  );
 });
