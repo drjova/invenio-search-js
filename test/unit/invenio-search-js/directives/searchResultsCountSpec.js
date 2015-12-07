@@ -23,80 +23,44 @@
 
 'use strict';
 
-describe('Check search result pagination directive', function() {
+describe('Check search count directive', function() {
 
-  var $compile,
-      $rootScope;
-
-  // Inject the angular module
-  beforeEach(module('invenioSearchJs'));
+  var $compile;
+  var $rootScope;
+  var scope;
+  var template;
 
   // load the templates
-  beforeEach(module('src/invenio-search-js/templates/invenioSearchResultsPagination.html'));
+  beforeEach(angular.mock.module('templates'));
+
+  // Inject the angular module
+  beforeEach(angular.mock.module('invenioSearchJs'));
 
   beforeEach(
     inject(function(_$compile_, _$rootScope_) {
-      // The injector unwraps the underscores (_) from around the parameter names when matching
+
       $compile = _$compile_;
       $rootScope = _$rootScope_;
-    })
-  );
 
-  it('creates invenio search bar directive',
-    inject(function(){
-
-      // Add the extra scopes
-      $rootScope.invenioSearchItems = {
+      scope = $rootScope;
+      scope.items = {
         hits: {
-          hits: [
-            {
-              title: 'Ironman\'s suit'
-            },
-            {
-              title: 'Captain America\'s shield'
-            },
-            {
-              title: 'Thor\'s Mjölnir'
-            }
-          ],
-          total: 3
+          total: 5,
         }
       };
 
-      $rootScope.invenioSearchArgs = {
-        params: {
-          page: 1,
-        }
-      };
+      template = '<invenio-search-results-count ' +
+        'invenio-search-items="items" ' +
+        'search-count-template="src/invenio-search-js/templates/invenioSearchResultsCount.html"' +
+        '></invenio-search-results-count>';
 
-      $rootScope.invenioSearchQuery = 'Save the world';
-
-      $rootScope.doSearch = function(query) {
-        return $rootScope.invenioSearchItems;
-      }
-
-      // Digest the scope
-      $rootScope.$digest();
-
-      var directiveCall = '<div invenio-search-results-pagination' +
-        'invenio-search-args="$rootScope.invenioSearchArgs"' +
-        'invenio-search-do="$root.doSearch(query)"' +
-        'invenio-search-items="$root.invenioSearchItems"' +
-        'invenio-search-query="$rootScope.invenioSearchQuery"' +
-        'search-pagination-template="src/invenio-search-js/templates/invenioSearchResultsPagination.html"' +
-        '></div>';
-
-      var element = $compile(directiveCall)($rootScope);
-
-      // What we expect
-      var expectString = 'paginationHelper.getFirstClass()';
-
-      // Digest the scope
-      $rootScope.$digest();
-
-      // Check
-      expect(element.html()).to.equal('');
+      template = $compile(template)(scope);
+      scope.$digest();
     })
   );
 
+  it('should have attributes', function() {
+    expect(template.isolateScope().invenioSearchItems.hits.total).to.be.equal(5);
+    expect(template.find('ng-pluralize').text()).to.be.equal('5 records found.');
+  });
 });

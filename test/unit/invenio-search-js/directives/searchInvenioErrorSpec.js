@@ -23,12 +23,13 @@
 
 'use strict';
 
-describe('Check search loading directive', function() {
+describe('Check search error directive', function() {
 
   var $compile;
   var $rootScope;
   var scope;
   var template;
+  var controller;
 
   // load the templates
   beforeEach(angular.mock.module('templates'));
@@ -43,13 +44,13 @@ describe('Check search loading directive', function() {
       $rootScope = _$rootScope_;
 
       scope = $rootScope;
-      scope.isLoading = true;
+      scope.hasError= true;
 
-      template = '<invenio-search-results-loading '+
-        'search-loading-message="Loading" ' +
-        'invenio-search-loading="isLoading" ' +
-        'search-loading-template="src/invenio-search-js/templates/invenioSearchLoading.html" ' +
-        '></invenio-search-results-loading>';
+      template = '<invenio-search-results-error ' +
+        'invenio-search-error="hasError" ' +
+        'search-message-error="Yo there is an error" '+
+        'search-message-template="src/invenio-search-js/templates/invenioSearchError.html"' +
+        '></invenio-search-results-error>';
 
       template = $compile(template)(scope);
       scope.$digest();
@@ -57,7 +58,7 @@ describe('Check search loading directive', function() {
   );
 
   it('should have attributes', function() {
-    expect(template.isolateScope().invenioSearchLoading).to.be.equal(true);
-    expect(template.isolateScope().searchLoadingMessage).to.be.equal('Loading');
+    expect(template.isolateScope().invenioSearchError).to.be.equal(true);
+    expect(template.isolateScope().searchMessageError).to.be.equal('Yo there is an error');
   });
 });
