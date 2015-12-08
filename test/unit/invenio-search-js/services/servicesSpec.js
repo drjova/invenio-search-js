@@ -23,45 +23,17 @@
 
 'use strict';
 
-describe('Check search count directive', function() {
+describe('Unit: testing services', function() {
 
-  var $compile;
-  var $rootScope;
-  var template;
-
+  // Request object
+  var request;
   // Inject the angular module
-  beforeEach(module('invenioSearchJs'));
+  beforeEach(angular.mock.module('invenioSearchJs'));
 
-  // load the templates
-  beforeEach(module('templates'));
+  it('should have a invenioSearchAPI ',
+    inject(function(invenioSearchAPI) {
+      // Expect the invenioSearchAPI to exist
+      expect(invenioSearchAPI).not.to.be.equal(undefined);
+  }));
 
-  beforeEach(
-    inject(function(_$compile_, _$rootScope_) {
-
-      $compile = _$compile_;
-      $rootScope = _$rootScope_;
-
-      template = angular.element(
-        '<div>' +
-          '<div ng-controller="invenioSearchController as searching">' +
-            '<div invenio-search-results-count' +
-              'invenio-search-items="searching.invenioResults"' +
-              'search-count-template="/src/invenio-search-js/templates/invenioSearchResultsCount.html"' +
-            '></div>' +
-          '</div>' +
-        '</div>'
-      );
-    })
-  );
-
-  it('Invenio count test',
-    inject(function(){
-      // Compile template
-      var element = $compile(
-        template
-      )($rootScope);
-
-      expect(element.html()).to.contain('');
-    })
-  );
 });

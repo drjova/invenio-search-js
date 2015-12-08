@@ -23,11 +23,11 @@
 
 'use strict';
 
-describe('Check searchbar directive', function() {
+describe('Check search loading directive', function() {
 
   var $compile;
   var $rootScope;
-  var element;
+  var template;
 
   // Inject the angular module
   beforeEach(module('invenioSearchJs'));
@@ -39,37 +39,29 @@ describe('Check searchbar directive', function() {
     inject(function(_$compile_, _$rootScope_) {
 
       $compile = _$compile_;
-      $rootScope = _$rootScope_.$new();
+      $rootScope = _$rootScope_;
 
-      var template = angular.element(
+      template = angular.element(
         '<div>' +
-          '<div invenio-search-bar' +
-            'invenio-search-query="searching.invenioSearchQuery"' +
-            'invenio-search-args="searching.invenioSearchArgs"' +
-            'invenio-search-do="searching.invenioDoSearch(query)"' +
-            'search-doctype=""' +
-            'search-method="GET"' +
-            'search-endpoint="http://localhost:9200/_search"' +
-            'search-page="1"' +
-            'search-size="2"' +
-            'search-bar-template="src/invenio-search-js/templates/invenioSearchBar.html"' +
-            'search-bar-input-placeholder="Type something"' +
-            '>'+
+          '<div ng-controller="invenioSearchController as searching">' +
+            '<div invenio-search-results-loading' +
+                'invenio-search-loading="searching.invenioSearchLoading"' +
+                'search-loading-template="src/invenio-search-js/templates/invenioSearchLoading.html"' +
+                'search-loading-message="Loading......"' +
+            '></div>' +
           '</div>' +
         '</div>'
       );
-      element = $compile(
-        template
-      )($rootScope);
-
-      $rootScope.$digest();
     })
   );
 
-  it('Invenio searchbar test',
+  it('Invenio loading test',
     inject(function(){
       // Compile template
-      $rootScope.$digest();
+      var element = $compile(
+        template
+      )($rootScope);
+
       expect(element.html()).to.contain('');
     })
   );
