@@ -13,7 +13,9 @@
   "dependencies": {
     "angular": "=1.4.8",
     "angular-mocks": "=1.4.8",
-    "angular-scenario": "=1.4.8"
+    "angular-scenario": "=1.4.8",
+    "d3": "^3.5.17",
+    "d3-tip": "^0.6.7"
   },
   "devDependencies": {
     "chai": "^1.9.1",
